@@ -1,0 +1,1699 @@
+Terminais sem uso na gramática
+
+    ERR
+
+
+Gramática
+
+    0 $accept: input $end
+
+    1 input: %empty
+    2      | input line
+
+    3 line: '\n'
+    4     | exp '\n'
+
+    5 exp: PROGRAM
+
+    6 PROGRAM: STATEMENT
+    7        | FUNCLIST
+
+    8 FUNCLIST: FUNCDEF FUNCLIST
+    9         | FUNCDEF
+
+   10 FUNCDEF: DF ID P1 PARAMLIST P2 CV1 STATELIST CV2
+
+   11 PARAMLIST: %empty
+   12          | PARAM ID VI PARAMLIST
+   13          | PARAM ID
+
+   14 PARAM: INT
+   15      | FLT
+   16      | STR
+
+   17 STATEMENT: VARDECL PV
+   18          | ATRIBSTAT PV
+   19          | PRINTSTAT PV
+   20          | READSTAT PV
+   21          | RETURNSTAT PV
+   22          | IFSTAT
+   23          | FORSTAT
+   24          | CV1 STATELIST CV2
+   25          | BRK PV
+   26          | PV
+
+   27 VARDECL: PARAM ID INTC
+
+   28 INTC: %empty
+   29     | CL1 INT CL2 INTC
+
+   30 ATRIBSTAT: LVALUE ATR ATRIBV
+
+   31 ATRIBV: EXPRESSION
+   32       | ALLOCEXPRESSION
+   33       | FUNCCALL
+
+   34 FUNCCALL: ID P1 PARAMLISTCALL P2
+
+   35 PARAMLISTCALL: %empty
+   36              | ID VI PARAMLISTCALL
+   37              | ID
+
+   38 PRINTSTAT: PR EXPRESSION
+
+   39 READSTAT: RD LVALUE
+
+   40 RETURNSTAT: RET
+
+   41 IFSTAT: IF P1 EXPRESSION P2 STATEMENT
+   42       | IF P1 EXPRESSION P2 STATEMENT ELS STATEMENT
+
+   43 FORSTAT: FOR P1 ATRIBSTAT PV EXPRESSION PV ATRIBSTAT P2 STATEMENT
+
+   44 STATELIST: STATEMENT
+   45          | STATEMENT STATELIST
+
+   46 ALLOCEXPRESSION: NEW PARAM NEXP
+
+   47 NEXP: CL1 NUMEXPRESSION CL2
+   48     | CL1 NUMEXPRESSION CL2 NEXP
+
+   49 EXPRESSION: NUMEXPRESSION MEXPRESSION
+
+   50 MEXPRESSION: OPERATORLIST NUMEXPRESSION
+   51            | %empty
+
+   52 OPERATORLIST: MER
+   53             | MAR
+   54             | MEI
+   55             | MAI
+   56             | CMP
+   57             | DIF
+
+   58 NUMEXPRESSION: TERM NTERM
+
+   59 NTERM: %empty
+   60      | MOP TERM NTERM
+
+   61 MOP: ADD
+   62    | SUB
+
+   63 TERM: UNARYEXPR UTERM
+
+   64 UTERM: %empty
+   65      | NOP UNARYEXPR UTERM
+
+   66 NOP: MUL
+   67    | DIV
+   68    | PRC
+
+   69 UNARYEXPR: ADD FACTOR
+   70          | SUB FACTOR
+   71          | FACTOR
+
+   72 FACTOR: ICT
+   73       | FCT
+   74       | SCT
+   75       | NL
+   76       | LVALUE
+   77       | P1 NUMEXPRESSION P2
+
+   78 LVALUE: ID NLVALUE
+
+   79 NLVALUE: %empty
+   80        | CL1 NUMEXPRESSION CL2 NLVALUE
+
+
+Terminais, com as regras onde eles aparecem
+
+    $end (0) 0
+    '\n' (10) 3 4
+    error (256)
+    ID (258) 10 12 13 27 34 36 37 78
+    ICT (259) 72
+    FCT (260) 73
+    SCT (261) 74
+    ADD (262) 61 69
+    SUB (263) 62 70
+    MUL (264) 66
+    DIV (265) 67
+    PRC (266) 68
+    ATR (267) 30
+    MAR (268) 53
+    MER (269) 52
+    CMP (270) 56
+    MAI (271) 55
+    MEI (272) 54
+    DIF (273) 57
+    P1 (274) 10 34 41 42 43 77
+    P2 (275) 10 34 41 42 43 77
+    CV1 (276) 10 24
+    CV2 (277) 10 24
+    CL1 (278) 29 47 48 80
+    CL2 (279) 29 47 48 80
+    VI (280) 12 36
+    PV (281) 17 18 19 20 21 25 26 43
+    NEW (282) 46
+    DF (283) 10
+    RD (284) 39
+    PR (285) 38
+    NL (286) 75
+    INT (287) 14 29
+    FLT (288) 15
+    STR (289) 16
+    IF (290) 41 42
+    ELS (291) 42
+    FOR (292) 43
+    BRK (293) 25
+    RET (294) 40
+    ERR (295)
+
+
+Não terminais com as regras onde eles aparecem
+
+    $accept (42)
+        à esquerda: 0
+    input (43)
+        à esquerda: 1 2
+        à direita: 0 2
+    line (44)
+        à esquerda: 3 4
+        à direita: 2
+    exp (45)
+        à esquerda: 5
+        à direita: 4
+    PROGRAM (46)
+        à esquerda: 6 7
+        à direita: 5
+    FUNCLIST (47)
+        à esquerda: 8 9
+        à direita: 7 8
+    FUNCDEF (48)
+        à esquerda: 10
+        à direita: 8 9
+    PARAMLIST (49)
+        à esquerda: 11 12 13
+        à direita: 10 12
+    PARAM (50)
+        à esquerda: 14 15 16
+        à direita: 12 13 27 46
+    STATEMENT (51)
+        à esquerda: 17 18 19 20 21 22 23 24 25 26
+        à direita: 6 41 42 43 44 45
+    VARDECL (52)
+        à esquerda: 27
+        à direita: 17
+    INTC (53)
+        à esquerda: 28 29
+        à direita: 27 29
+    ATRIBSTAT (54)
+        à esquerda: 30
+        à direita: 18 43
+    ATRIBV (55)
+        à esquerda: 31 32 33
+        à direita: 30
+    FUNCCALL (56)
+        à esquerda: 34
+        à direita: 33
+    PARAMLISTCALL (57)
+        à esquerda: 35 36 37
+        à direita: 34 36
+    PRINTSTAT (58)
+        à esquerda: 38
+        à direita: 19
+    READSTAT (59)
+        à esquerda: 39
+        à direita: 20
+    RETURNSTAT (60)
+        à esquerda: 40
+        à direita: 21
+    IFSTAT (61)
+        à esquerda: 41 42
+        à direita: 22
+    FORSTAT (62)
+        à esquerda: 43
+        à direita: 23
+    STATELIST (63)
+        à esquerda: 44 45
+        à direita: 10 24 45
+    ALLOCEXPRESSION (64)
+        à esquerda: 46
+        à direita: 32
+    NEXP (65)
+        à esquerda: 47 48
+        à direita: 46 48
+    EXPRESSION (66)
+        à esquerda: 49
+        à direita: 31 38 41 42 43
+    MEXPRESSION (67)
+        à esquerda: 50 51
+        à direita: 49
+    OPERATORLIST (68)
+        à esquerda: 52 53 54 55 56 57
+        à direita: 50
+    NUMEXPRESSION (69)
+        à esquerda: 58
+        à direita: 47 48 49 50 77 80
+    NTERM (70)
+        à esquerda: 59 60
+        à direita: 58 60
+    MOP (71)
+        à esquerda: 61 62
+        à direita: 60
+    TERM (72)
+        à esquerda: 63
+        à direita: 58 60
+    UTERM (73)
+        à esquerda: 64 65
+        à direita: 63 65
+    NOP (74)
+        à esquerda: 66 67 68
+        à direita: 65
+    UNARYEXPR (75)
+        à esquerda: 69 70 71
+        à direita: 63 65
+    FACTOR (76)
+        à esquerda: 72 73 74 75 76 77
+        à direita: 69 70 71
+    LVALUE (77)
+        à esquerda: 78
+        à direita: 30 39 76
+    NLVALUE (78)
+        à esquerda: 79 80
+        à direita: 78 80
+
+
+Estado 0
+
+    0 $accept: . input $end
+
+    $padrão  reduzir usando a regra 1 (input)
+
+    input  ir ao estado 1
+
+
+Estado 1
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end  deslocar, e ir ao estado 2
+    ID    deslocar, e ir ao estado 3
+    CV1   deslocar, e ir ao estado 4
+    PV    deslocar, e ir ao estado 5
+    DF    deslocar, e ir ao estado 6
+    RD    deslocar, e ir ao estado 7
+    PR    deslocar, e ir ao estado 8
+    INT   deslocar, e ir ao estado 9
+    FLT   deslocar, e ir ao estado 10
+    STR   deslocar, e ir ao estado 11
+    IF    deslocar, e ir ao estado 12
+    FOR   deslocar, e ir ao estado 13
+    BRK   deslocar, e ir ao estado 14
+    RET   deslocar, e ir ao estado 15
+    '\n'  deslocar, e ir ao estado 16
+
+    line        ir ao estado 17
+    exp         ir ao estado 18
+    PROGRAM     ir ao estado 19
+    FUNCLIST    ir ao estado 20
+    FUNCDEF     ir ao estado 21
+    PARAM       ir ao estado 22
+    STATEMENT   ir ao estado 23
+    VARDECL     ir ao estado 24
+    ATRIBSTAT   ir ao estado 25
+    PRINTSTAT   ir ao estado 26
+    READSTAT    ir ao estado 27
+    RETURNSTAT  ir ao estado 28
+    IFSTAT      ir ao estado 29
+    FORSTAT     ir ao estado 30
+    LVALUE      ir ao estado 31
+
+
+Estado 2
+
+    0 $accept: input $end .
+
+    $padrão  aceitar
+
+
+Estado 3
+
+   78 LVALUE: ID . NLVALUE
+
+    CL1  deslocar, e ir ao estado 32
+
+    $padrão  reduzir usando a regra 79 (NLVALUE)
+
+    NLVALUE  ir ao estado 33
+
+
+Estado 4
+
+   24 STATEMENT: CV1 . STATELIST CV2
+
+    ID   deslocar, e ir ao estado 3
+    CV1  deslocar, e ir ao estado 4
+    PV   deslocar, e ir ao estado 5
+    RD   deslocar, e ir ao estado 7
+    PR   deslocar, e ir ao estado 8
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+    IF   deslocar, e ir ao estado 12
+    FOR  deslocar, e ir ao estado 13
+    BRK  deslocar, e ir ao estado 14
+    RET  deslocar, e ir ao estado 15
+
+    PARAM       ir ao estado 22
+    STATEMENT   ir ao estado 34
+    VARDECL     ir ao estado 24
+    ATRIBSTAT   ir ao estado 25
+    PRINTSTAT   ir ao estado 26
+    READSTAT    ir ao estado 27
+    RETURNSTAT  ir ao estado 28
+    IFSTAT      ir ao estado 29
+    FORSTAT     ir ao estado 30
+    STATELIST   ir ao estado 35
+    LVALUE      ir ao estado 31
+
+
+Estado 5
+
+   26 STATEMENT: PV .
+
+    $padrão  reduzir usando a regra 26 (STATEMENT)
+
+
+Estado 6
+
+   10 FUNCDEF: DF . ID P1 PARAMLIST P2 CV1 STATELIST CV2
+
+    ID  deslocar, e ir ao estado 36
+
+
+Estado 7
+
+   39 READSTAT: RD . LVALUE
+
+    ID  deslocar, e ir ao estado 3
+
+    LVALUE  ir ao estado 37
+
+
+Estado 8
+
+   38 PRINTSTAT: PR . EXPRESSION
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    EXPRESSION     ir ao estado 45
+    NUMEXPRESSION  ir ao estado 46
+    TERM           ir ao estado 47
+    UNARYEXPR      ir ao estado 48
+    FACTOR         ir ao estado 49
+    LVALUE         ir ao estado 50
+
+
+Estado 9
+
+   14 PARAM: INT .
+
+    $padrão  reduzir usando a regra 14 (PARAM)
+
+
+Estado 10
+
+   15 PARAM: FLT .
+
+    $padrão  reduzir usando a regra 15 (PARAM)
+
+
+Estado 11
+
+   16 PARAM: STR .
+
+    $padrão  reduzir usando a regra 16 (PARAM)
+
+
+Estado 12
+
+   41 IFSTAT: IF . P1 EXPRESSION P2 STATEMENT
+   42       | IF . P1 EXPRESSION P2 STATEMENT ELS STATEMENT
+
+    P1  deslocar, e ir ao estado 51
+
+
+Estado 13
+
+   43 FORSTAT: FOR . P1 ATRIBSTAT PV EXPRESSION PV ATRIBSTAT P2 STATEMENT
+
+    P1  deslocar, e ir ao estado 52
+
+
+Estado 14
+
+   25 STATEMENT: BRK . PV
+
+    PV  deslocar, e ir ao estado 53
+
+
+Estado 15
+
+   40 RETURNSTAT: RET .
+
+    $padrão  reduzir usando a regra 40 (RETURNSTAT)
+
+
+Estado 16
+
+    3 line: '\n' .
+
+    $padrão  reduzir usando a regra 3 (line)
+
+
+Estado 17
+
+    2 input: input line .
+
+    $padrão  reduzir usando a regra 2 (input)
+
+
+Estado 18
+
+    4 line: exp . '\n'
+
+    '\n'  deslocar, e ir ao estado 54
+
+
+Estado 19
+
+    5 exp: PROGRAM .
+
+    $padrão  reduzir usando a regra 5 (exp)
+
+
+Estado 20
+
+    7 PROGRAM: FUNCLIST .
+
+    $padrão  reduzir usando a regra 7 (PROGRAM)
+
+
+Estado 21
+
+    8 FUNCLIST: FUNCDEF . FUNCLIST
+    9         | FUNCDEF .
+
+    DF  deslocar, e ir ao estado 6
+
+    $padrão  reduzir usando a regra 9 (FUNCLIST)
+
+    FUNCLIST  ir ao estado 55
+    FUNCDEF   ir ao estado 21
+
+
+Estado 22
+
+   27 VARDECL: PARAM . ID INTC
+
+    ID  deslocar, e ir ao estado 56
+
+
+Estado 23
+
+    6 PROGRAM: STATEMENT .
+
+    $padrão  reduzir usando a regra 6 (PROGRAM)
+
+
+Estado 24
+
+   17 STATEMENT: VARDECL . PV
+
+    PV  deslocar, e ir ao estado 57
+
+
+Estado 25
+
+   18 STATEMENT: ATRIBSTAT . PV
+
+    PV  deslocar, e ir ao estado 58
+
+
+Estado 26
+
+   19 STATEMENT: PRINTSTAT . PV
+
+    PV  deslocar, e ir ao estado 59
+
+
+Estado 27
+
+   20 STATEMENT: READSTAT . PV
+
+    PV  deslocar, e ir ao estado 60
+
+
+Estado 28
+
+   21 STATEMENT: RETURNSTAT . PV
+
+    PV  deslocar, e ir ao estado 61
+
+
+Estado 29
+
+   22 STATEMENT: IFSTAT .
+
+    $padrão  reduzir usando a regra 22 (STATEMENT)
+
+
+Estado 30
+
+   23 STATEMENT: FORSTAT .
+
+    $padrão  reduzir usando a regra 23 (STATEMENT)
+
+
+Estado 31
+
+   30 ATRIBSTAT: LVALUE . ATR ATRIBV
+
+    ATR  deslocar, e ir ao estado 62
+
+
+Estado 32
+
+   80 NLVALUE: CL1 . NUMEXPRESSION CL2 NLVALUE
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    NUMEXPRESSION  ir ao estado 63
+    TERM           ir ao estado 47
+    UNARYEXPR      ir ao estado 48
+    FACTOR         ir ao estado 49
+    LVALUE         ir ao estado 50
+
+
+Estado 33
+
+   78 LVALUE: ID NLVALUE .
+
+    $padrão  reduzir usando a regra 78 (LVALUE)
+
+
+Estado 34
+
+   44 STATELIST: STATEMENT .
+   45          | STATEMENT . STATELIST
+
+    ID   deslocar, e ir ao estado 3
+    CV1  deslocar, e ir ao estado 4
+    PV   deslocar, e ir ao estado 5
+    RD   deslocar, e ir ao estado 7
+    PR   deslocar, e ir ao estado 8
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+    IF   deslocar, e ir ao estado 12
+    FOR  deslocar, e ir ao estado 13
+    BRK  deslocar, e ir ao estado 14
+    RET  deslocar, e ir ao estado 15
+
+    $padrão  reduzir usando a regra 44 (STATELIST)
+
+    PARAM       ir ao estado 22
+    STATEMENT   ir ao estado 34
+    VARDECL     ir ao estado 24
+    ATRIBSTAT   ir ao estado 25
+    PRINTSTAT   ir ao estado 26
+    READSTAT    ir ao estado 27
+    RETURNSTAT  ir ao estado 28
+    IFSTAT      ir ao estado 29
+    FORSTAT     ir ao estado 30
+    STATELIST   ir ao estado 64
+    LVALUE      ir ao estado 31
+
+
+Estado 35
+
+   24 STATEMENT: CV1 STATELIST . CV2
+
+    CV2  deslocar, e ir ao estado 65
+
+
+Estado 36
+
+   10 FUNCDEF: DF ID . P1 PARAMLIST P2 CV1 STATELIST CV2
+
+    P1  deslocar, e ir ao estado 66
+
+
+Estado 37
+
+   39 READSTAT: RD LVALUE .
+
+    $padrão  reduzir usando a regra 39 (READSTAT)
+
+
+Estado 38
+
+   72 FACTOR: ICT .
+
+    $padrão  reduzir usando a regra 72 (FACTOR)
+
+
+Estado 39
+
+   73 FACTOR: FCT .
+
+    $padrão  reduzir usando a regra 73 (FACTOR)
+
+
+Estado 40
+
+   74 FACTOR: SCT .
+
+    $padrão  reduzir usando a regra 74 (FACTOR)
+
+
+Estado 41
+
+   69 UNARYEXPR: ADD . FACTOR
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    FACTOR  ir ao estado 67
+    LVALUE  ir ao estado 50
+
+
+Estado 42
+
+   70 UNARYEXPR: SUB . FACTOR
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    FACTOR  ir ao estado 68
+    LVALUE  ir ao estado 50
+
+
+Estado 43
+
+   77 FACTOR: P1 . NUMEXPRESSION P2
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    NUMEXPRESSION  ir ao estado 69
+    TERM           ir ao estado 47
+    UNARYEXPR      ir ao estado 48
+    FACTOR         ir ao estado 49
+    LVALUE         ir ao estado 50
+
+
+Estado 44
+
+   75 FACTOR: NL .
+
+    $padrão  reduzir usando a regra 75 (FACTOR)
+
+
+Estado 45
+
+   38 PRINTSTAT: PR EXPRESSION .
+
+    $padrão  reduzir usando a regra 38 (PRINTSTAT)
+
+
+Estado 46
+
+   49 EXPRESSION: NUMEXPRESSION . MEXPRESSION
+
+    MAR  deslocar, e ir ao estado 70
+    MER  deslocar, e ir ao estado 71
+    CMP  deslocar, e ir ao estado 72
+    MAI  deslocar, e ir ao estado 73
+    MEI  deslocar, e ir ao estado 74
+    DIF  deslocar, e ir ao estado 75
+
+    $padrão  reduzir usando a regra 51 (MEXPRESSION)
+
+    MEXPRESSION   ir ao estado 76
+    OPERATORLIST  ir ao estado 77
+
+
+Estado 47
+
+   58 NUMEXPRESSION: TERM . NTERM
+
+    ADD  deslocar, e ir ao estado 78
+    SUB  deslocar, e ir ao estado 79
+
+    $padrão  reduzir usando a regra 59 (NTERM)
+
+    NTERM  ir ao estado 80
+    MOP    ir ao estado 81
+
+
+Estado 48
+
+   63 TERM: UNARYEXPR . UTERM
+
+    MUL  deslocar, e ir ao estado 82
+    DIV  deslocar, e ir ao estado 83
+    PRC  deslocar, e ir ao estado 84
+
+    $padrão  reduzir usando a regra 64 (UTERM)
+
+    UTERM  ir ao estado 85
+    NOP    ir ao estado 86
+
+
+Estado 49
+
+   71 UNARYEXPR: FACTOR .
+
+    $padrão  reduzir usando a regra 71 (UNARYEXPR)
+
+
+Estado 50
+
+   76 FACTOR: LVALUE .
+
+    $padrão  reduzir usando a regra 76 (FACTOR)
+
+
+Estado 51
+
+   41 IFSTAT: IF P1 . EXPRESSION P2 STATEMENT
+   42       | IF P1 . EXPRESSION P2 STATEMENT ELS STATEMENT
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    EXPRESSION     ir ao estado 87
+    NUMEXPRESSION  ir ao estado 46
+    TERM           ir ao estado 47
+    UNARYEXPR      ir ao estado 48
+    FACTOR         ir ao estado 49
+    LVALUE         ir ao estado 50
+
+
+Estado 52
+
+   43 FORSTAT: FOR P1 . ATRIBSTAT PV EXPRESSION PV ATRIBSTAT P2 STATEMENT
+
+    ID  deslocar, e ir ao estado 3
+
+    ATRIBSTAT  ir ao estado 88
+    LVALUE     ir ao estado 31
+
+
+Estado 53
+
+   25 STATEMENT: BRK PV .
+
+    $padrão  reduzir usando a regra 25 (STATEMENT)
+
+
+Estado 54
+
+    4 line: exp '\n' .
+
+    $padrão  reduzir usando a regra 4 (line)
+
+
+Estado 55
+
+    8 FUNCLIST: FUNCDEF FUNCLIST .
+
+    $padrão  reduzir usando a regra 8 (FUNCLIST)
+
+
+Estado 56
+
+   27 VARDECL: PARAM ID . INTC
+
+    CL1  deslocar, e ir ao estado 89
+
+    $padrão  reduzir usando a regra 28 (INTC)
+
+    INTC  ir ao estado 90
+
+
+Estado 57
+
+   17 STATEMENT: VARDECL PV .
+
+    $padrão  reduzir usando a regra 17 (STATEMENT)
+
+
+Estado 58
+
+   18 STATEMENT: ATRIBSTAT PV .
+
+    $padrão  reduzir usando a regra 18 (STATEMENT)
+
+
+Estado 59
+
+   19 STATEMENT: PRINTSTAT PV .
+
+    $padrão  reduzir usando a regra 19 (STATEMENT)
+
+
+Estado 60
+
+   20 STATEMENT: READSTAT PV .
+
+    $padrão  reduzir usando a regra 20 (STATEMENT)
+
+
+Estado 61
+
+   21 STATEMENT: RETURNSTAT PV .
+
+    $padrão  reduzir usando a regra 21 (STATEMENT)
+
+
+Estado 62
+
+   30 ATRIBSTAT: LVALUE ATR . ATRIBV
+
+    ID   deslocar, e ir ao estado 91
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NEW  deslocar, e ir ao estado 92
+    NL   deslocar, e ir ao estado 44
+
+    ATRIBV           ir ao estado 93
+    FUNCCALL         ir ao estado 94
+    ALLOCEXPRESSION  ir ao estado 95
+    EXPRESSION       ir ao estado 96
+    NUMEXPRESSION    ir ao estado 46
+    TERM             ir ao estado 47
+    UNARYEXPR        ir ao estado 48
+    FACTOR           ir ao estado 49
+    LVALUE           ir ao estado 50
+
+
+Estado 63
+
+   80 NLVALUE: CL1 NUMEXPRESSION . CL2 NLVALUE
+
+    CL2  deslocar, e ir ao estado 97
+
+
+Estado 64
+
+   45 STATELIST: STATEMENT STATELIST .
+
+    $padrão  reduzir usando a regra 45 (STATELIST)
+
+
+Estado 65
+
+   24 STATEMENT: CV1 STATELIST CV2 .
+
+    $padrão  reduzir usando a regra 24 (STATEMENT)
+
+
+Estado 66
+
+   10 FUNCDEF: DF ID P1 . PARAMLIST P2 CV1 STATELIST CV2
+
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+
+    $padrão  reduzir usando a regra 11 (PARAMLIST)
+
+    PARAMLIST  ir ao estado 98
+    PARAM      ir ao estado 99
+
+
+Estado 67
+
+   69 UNARYEXPR: ADD FACTOR .
+
+    $padrão  reduzir usando a regra 69 (UNARYEXPR)
+
+
+Estado 68
+
+   70 UNARYEXPR: SUB FACTOR .
+
+    $padrão  reduzir usando a regra 70 (UNARYEXPR)
+
+
+Estado 69
+
+   77 FACTOR: P1 NUMEXPRESSION . P2
+
+    P2  deslocar, e ir ao estado 100
+
+
+Estado 70
+
+   53 OPERATORLIST: MAR .
+
+    $padrão  reduzir usando a regra 53 (OPERATORLIST)
+
+
+Estado 71
+
+   52 OPERATORLIST: MER .
+
+    $padrão  reduzir usando a regra 52 (OPERATORLIST)
+
+
+Estado 72
+
+   56 OPERATORLIST: CMP .
+
+    $padrão  reduzir usando a regra 56 (OPERATORLIST)
+
+
+Estado 73
+
+   55 OPERATORLIST: MAI .
+
+    $padrão  reduzir usando a regra 55 (OPERATORLIST)
+
+
+Estado 74
+
+   54 OPERATORLIST: MEI .
+
+    $padrão  reduzir usando a regra 54 (OPERATORLIST)
+
+
+Estado 75
+
+   57 OPERATORLIST: DIF .
+
+    $padrão  reduzir usando a regra 57 (OPERATORLIST)
+
+
+Estado 76
+
+   49 EXPRESSION: NUMEXPRESSION MEXPRESSION .
+
+    $padrão  reduzir usando a regra 49 (EXPRESSION)
+
+
+Estado 77
+
+   50 MEXPRESSION: OPERATORLIST . NUMEXPRESSION
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    NUMEXPRESSION  ir ao estado 101
+    TERM           ir ao estado 47
+    UNARYEXPR      ir ao estado 48
+    FACTOR         ir ao estado 49
+    LVALUE         ir ao estado 50
+
+
+Estado 78
+
+   61 MOP: ADD .
+
+    $padrão  reduzir usando a regra 61 (MOP)
+
+
+Estado 79
+
+   62 MOP: SUB .
+
+    $padrão  reduzir usando a regra 62 (MOP)
+
+
+Estado 80
+
+   58 NUMEXPRESSION: TERM NTERM .
+
+    $padrão  reduzir usando a regra 58 (NUMEXPRESSION)
+
+
+Estado 81
+
+   60 NTERM: MOP . TERM NTERM
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    TERM       ir ao estado 102
+    UNARYEXPR  ir ao estado 48
+    FACTOR     ir ao estado 49
+    LVALUE     ir ao estado 50
+
+
+Estado 82
+
+   66 NOP: MUL .
+
+    $padrão  reduzir usando a regra 66 (NOP)
+
+
+Estado 83
+
+   67 NOP: DIV .
+
+    $padrão  reduzir usando a regra 67 (NOP)
+
+
+Estado 84
+
+   68 NOP: PRC .
+
+    $padrão  reduzir usando a regra 68 (NOP)
+
+
+Estado 85
+
+   63 TERM: UNARYEXPR UTERM .
+
+    $padrão  reduzir usando a regra 63 (TERM)
+
+
+Estado 86
+
+   65 UTERM: NOP . UNARYEXPR UTERM
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    UNARYEXPR  ir ao estado 103
+    FACTOR     ir ao estado 49
+    LVALUE     ir ao estado 50
+
+
+Estado 87
+
+   41 IFSTAT: IF P1 EXPRESSION . P2 STATEMENT
+   42       | IF P1 EXPRESSION . P2 STATEMENT ELS STATEMENT
+
+    P2  deslocar, e ir ao estado 104
+
+
+Estado 88
+
+   43 FORSTAT: FOR P1 ATRIBSTAT . PV EXPRESSION PV ATRIBSTAT P2 STATEMENT
+
+    PV  deslocar, e ir ao estado 105
+
+
+Estado 89
+
+   29 INTC: CL1 . INT CL2 INTC
+
+    INT  deslocar, e ir ao estado 106
+
+
+Estado 90
+
+   27 VARDECL: PARAM ID INTC .
+
+    $padrão  reduzir usando a regra 27 (VARDECL)
+
+
+Estado 91
+
+   34 FUNCCALL: ID . P1 PARAMLISTCALL P2
+   78 LVALUE: ID . NLVALUE
+
+    P1   deslocar, e ir ao estado 107
+    CL1  deslocar, e ir ao estado 32
+
+    $padrão  reduzir usando a regra 79 (NLVALUE)
+
+    NLVALUE  ir ao estado 33
+
+
+Estado 92
+
+   46 ALLOCEXPRESSION: NEW . PARAM NEXP
+
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+
+    PARAM  ir ao estado 108
+
+
+Estado 93
+
+   30 ATRIBSTAT: LVALUE ATR ATRIBV .
+
+    $padrão  reduzir usando a regra 30 (ATRIBSTAT)
+
+
+Estado 94
+
+   33 ATRIBV: FUNCCALL .
+
+    $padrão  reduzir usando a regra 33 (ATRIBV)
+
+
+Estado 95
+
+   32 ATRIBV: ALLOCEXPRESSION .
+
+    $padrão  reduzir usando a regra 32 (ATRIBV)
+
+
+Estado 96
+
+   31 ATRIBV: EXPRESSION .
+
+    $padrão  reduzir usando a regra 31 (ATRIBV)
+
+
+Estado 97
+
+   80 NLVALUE: CL1 NUMEXPRESSION CL2 . NLVALUE
+
+    CL1  deslocar, e ir ao estado 32
+
+    $padrão  reduzir usando a regra 79 (NLVALUE)
+
+    NLVALUE  ir ao estado 109
+
+
+Estado 98
+
+   10 FUNCDEF: DF ID P1 PARAMLIST . P2 CV1 STATELIST CV2
+
+    P2  deslocar, e ir ao estado 110
+
+
+Estado 99
+
+   12 PARAMLIST: PARAM . ID VI PARAMLIST
+   13          | PARAM . ID
+
+    ID  deslocar, e ir ao estado 111
+
+
+Estado 100
+
+   77 FACTOR: P1 NUMEXPRESSION P2 .
+
+    $padrão  reduzir usando a regra 77 (FACTOR)
+
+
+Estado 101
+
+   50 MEXPRESSION: OPERATORLIST NUMEXPRESSION .
+
+    $padrão  reduzir usando a regra 50 (MEXPRESSION)
+
+
+Estado 102
+
+   60 NTERM: MOP TERM . NTERM
+
+    ADD  deslocar, e ir ao estado 78
+    SUB  deslocar, e ir ao estado 79
+
+    $padrão  reduzir usando a regra 59 (NTERM)
+
+    NTERM  ir ao estado 112
+    MOP    ir ao estado 81
+
+
+Estado 103
+
+   65 UTERM: NOP UNARYEXPR . UTERM
+
+    MUL  deslocar, e ir ao estado 82
+    DIV  deslocar, e ir ao estado 83
+    PRC  deslocar, e ir ao estado 84
+
+    $padrão  reduzir usando a regra 64 (UTERM)
+
+    UTERM  ir ao estado 113
+    NOP    ir ao estado 86
+
+
+Estado 104
+
+   41 IFSTAT: IF P1 EXPRESSION P2 . STATEMENT
+   42       | IF P1 EXPRESSION P2 . STATEMENT ELS STATEMENT
+
+    ID   deslocar, e ir ao estado 3
+    CV1  deslocar, e ir ao estado 4
+    PV   deslocar, e ir ao estado 5
+    RD   deslocar, e ir ao estado 7
+    PR   deslocar, e ir ao estado 8
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+    IF   deslocar, e ir ao estado 12
+    FOR  deslocar, e ir ao estado 13
+    BRK  deslocar, e ir ao estado 14
+    RET  deslocar, e ir ao estado 15
+
+    PARAM       ir ao estado 22
+    STATEMENT   ir ao estado 114
+    VARDECL     ir ao estado 24
+    ATRIBSTAT   ir ao estado 25
+    PRINTSTAT   ir ao estado 26
+    READSTAT    ir ao estado 27
+    RETURNSTAT  ir ao estado 28
+    IFSTAT      ir ao estado 29
+    FORSTAT     ir ao estado 30
+    LVALUE      ir ao estado 31
+
+
+Estado 105
+
+   43 FORSTAT: FOR P1 ATRIBSTAT PV . EXPRESSION PV ATRIBSTAT P2 STATEMENT
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    EXPRESSION     ir ao estado 115
+    NUMEXPRESSION  ir ao estado 46
+    TERM           ir ao estado 47
+    UNARYEXPR      ir ao estado 48
+    FACTOR         ir ao estado 49
+    LVALUE         ir ao estado 50
+
+
+Estado 106
+
+   29 INTC: CL1 INT . CL2 INTC
+
+    CL2  deslocar, e ir ao estado 116
+
+
+Estado 107
+
+   34 FUNCCALL: ID P1 . PARAMLISTCALL P2
+
+    ID  deslocar, e ir ao estado 117
+
+    $padrão  reduzir usando a regra 35 (PARAMLISTCALL)
+
+    PARAMLISTCALL  ir ao estado 118
+
+
+Estado 108
+
+   46 ALLOCEXPRESSION: NEW PARAM . NEXP
+
+    CL1  deslocar, e ir ao estado 119
+
+    NEXP  ir ao estado 120
+
+
+Estado 109
+
+   80 NLVALUE: CL1 NUMEXPRESSION CL2 NLVALUE .
+
+    $padrão  reduzir usando a regra 80 (NLVALUE)
+
+
+Estado 110
+
+   10 FUNCDEF: DF ID P1 PARAMLIST P2 . CV1 STATELIST CV2
+
+    CV1  deslocar, e ir ao estado 121
+
+
+Estado 111
+
+   12 PARAMLIST: PARAM ID . VI PARAMLIST
+   13          | PARAM ID .
+
+    VI  deslocar, e ir ao estado 122
+
+    $padrão  reduzir usando a regra 13 (PARAMLIST)
+
+
+Estado 112
+
+   60 NTERM: MOP TERM NTERM .
+
+    $padrão  reduzir usando a regra 60 (NTERM)
+
+
+Estado 113
+
+   65 UTERM: NOP UNARYEXPR UTERM .
+
+    $padrão  reduzir usando a regra 65 (UTERM)
+
+
+Estado 114
+
+   41 IFSTAT: IF P1 EXPRESSION P2 STATEMENT .
+   42       | IF P1 EXPRESSION P2 STATEMENT . ELS STATEMENT
+
+    ELS  deslocar, e ir ao estado 123
+
+    $padrão  reduzir usando a regra 41 (IFSTAT)
+
+
+Estado 115
+
+   43 FORSTAT: FOR P1 ATRIBSTAT PV EXPRESSION . PV ATRIBSTAT P2 STATEMENT
+
+    PV  deslocar, e ir ao estado 124
+
+
+Estado 116
+
+   29 INTC: CL1 INT CL2 . INTC
+
+    CL1  deslocar, e ir ao estado 89
+
+    $padrão  reduzir usando a regra 28 (INTC)
+
+    INTC  ir ao estado 125
+
+
+Estado 117
+
+   36 PARAMLISTCALL: ID . VI PARAMLISTCALL
+   37              | ID .
+
+    VI  deslocar, e ir ao estado 126
+
+    $padrão  reduzir usando a regra 37 (PARAMLISTCALL)
+
+
+Estado 118
+
+   34 FUNCCALL: ID P1 PARAMLISTCALL . P2
+
+    P2  deslocar, e ir ao estado 127
+
+
+Estado 119
+
+   47 NEXP: CL1 . NUMEXPRESSION CL2
+   48     | CL1 . NUMEXPRESSION CL2 NEXP
+
+    ID   deslocar, e ir ao estado 3
+    ICT  deslocar, e ir ao estado 38
+    FCT  deslocar, e ir ao estado 39
+    SCT  deslocar, e ir ao estado 40
+    ADD  deslocar, e ir ao estado 41
+    SUB  deslocar, e ir ao estado 42
+    P1   deslocar, e ir ao estado 43
+    NL   deslocar, e ir ao estado 44
+
+    NUMEXPRESSION  ir ao estado 128
+    TERM           ir ao estado 47
+    UNARYEXPR      ir ao estado 48
+    FACTOR         ir ao estado 49
+    LVALUE         ir ao estado 50
+
+
+Estado 120
+
+   46 ALLOCEXPRESSION: NEW PARAM NEXP .
+
+    $padrão  reduzir usando a regra 46 (ALLOCEXPRESSION)
+
+
+Estado 121
+
+   10 FUNCDEF: DF ID P1 PARAMLIST P2 CV1 . STATELIST CV2
+
+    ID   deslocar, e ir ao estado 3
+    CV1  deslocar, e ir ao estado 4
+    PV   deslocar, e ir ao estado 5
+    RD   deslocar, e ir ao estado 7
+    PR   deslocar, e ir ao estado 8
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+    IF   deslocar, e ir ao estado 12
+    FOR  deslocar, e ir ao estado 13
+    BRK  deslocar, e ir ao estado 14
+    RET  deslocar, e ir ao estado 15
+
+    PARAM       ir ao estado 22
+    STATEMENT   ir ao estado 34
+    VARDECL     ir ao estado 24
+    ATRIBSTAT   ir ao estado 25
+    PRINTSTAT   ir ao estado 26
+    READSTAT    ir ao estado 27
+    RETURNSTAT  ir ao estado 28
+    IFSTAT      ir ao estado 29
+    FORSTAT     ir ao estado 30
+    STATELIST   ir ao estado 129
+    LVALUE      ir ao estado 31
+
+
+Estado 122
+
+   12 PARAMLIST: PARAM ID VI . PARAMLIST
+
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+
+    $padrão  reduzir usando a regra 11 (PARAMLIST)
+
+    PARAMLIST  ir ao estado 130
+    PARAM      ir ao estado 99
+
+
+Estado 123
+
+   42 IFSTAT: IF P1 EXPRESSION P2 STATEMENT ELS . STATEMENT
+
+    ID   deslocar, e ir ao estado 3
+    CV1  deslocar, e ir ao estado 4
+    PV   deslocar, e ir ao estado 5
+    RD   deslocar, e ir ao estado 7
+    PR   deslocar, e ir ao estado 8
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+    IF   deslocar, e ir ao estado 12
+    FOR  deslocar, e ir ao estado 13
+    BRK  deslocar, e ir ao estado 14
+    RET  deslocar, e ir ao estado 15
+
+    PARAM       ir ao estado 22
+    STATEMENT   ir ao estado 131
+    VARDECL     ir ao estado 24
+    ATRIBSTAT   ir ao estado 25
+    PRINTSTAT   ir ao estado 26
+    READSTAT    ir ao estado 27
+    RETURNSTAT  ir ao estado 28
+    IFSTAT      ir ao estado 29
+    FORSTAT     ir ao estado 30
+    LVALUE      ir ao estado 31
+
+
+Estado 124
+
+   43 FORSTAT: FOR P1 ATRIBSTAT PV EXPRESSION PV . ATRIBSTAT P2 STATEMENT
+
+    ID  deslocar, e ir ao estado 3
+
+    ATRIBSTAT  ir ao estado 132
+    LVALUE     ir ao estado 31
+
+
+Estado 125
+
+   29 INTC: CL1 INT CL2 INTC .
+
+    $padrão  reduzir usando a regra 29 (INTC)
+
+
+Estado 126
+
+   36 PARAMLISTCALL: ID VI . PARAMLISTCALL
+
+    ID  deslocar, e ir ao estado 117
+
+    $padrão  reduzir usando a regra 35 (PARAMLISTCALL)
+
+    PARAMLISTCALL  ir ao estado 133
+
+
+Estado 127
+
+   34 FUNCCALL: ID P1 PARAMLISTCALL P2 .
+
+    $padrão  reduzir usando a regra 34 (FUNCCALL)
+
+
+Estado 128
+
+   47 NEXP: CL1 NUMEXPRESSION . CL2
+   48     | CL1 NUMEXPRESSION . CL2 NEXP
+
+    CL2  deslocar, e ir ao estado 134
+
+
+Estado 129
+
+   10 FUNCDEF: DF ID P1 PARAMLIST P2 CV1 STATELIST . CV2
+
+    CV2  deslocar, e ir ao estado 135
+
+
+Estado 130
+
+   12 PARAMLIST: PARAM ID VI PARAMLIST .
+
+    $padrão  reduzir usando a regra 12 (PARAMLIST)
+
+
+Estado 131
+
+   42 IFSTAT: IF P1 EXPRESSION P2 STATEMENT ELS STATEMENT .
+
+    $padrão  reduzir usando a regra 42 (IFSTAT)
+
+
+Estado 132
+
+   43 FORSTAT: FOR P1 ATRIBSTAT PV EXPRESSION PV ATRIBSTAT . P2 STATEMENT
+
+    P2  deslocar, e ir ao estado 136
+
+
+Estado 133
+
+   36 PARAMLISTCALL: ID VI PARAMLISTCALL .
+
+    $padrão  reduzir usando a regra 36 (PARAMLISTCALL)
+
+
+Estado 134
+
+   47 NEXP: CL1 NUMEXPRESSION CL2 .
+   48     | CL1 NUMEXPRESSION CL2 . NEXP
+
+    CL1  deslocar, e ir ao estado 119
+
+    $padrão  reduzir usando a regra 47 (NEXP)
+
+    NEXP  ir ao estado 137
+
+
+Estado 135
+
+   10 FUNCDEF: DF ID P1 PARAMLIST P2 CV1 STATELIST CV2 .
+
+    $padrão  reduzir usando a regra 10 (FUNCDEF)
+
+
+Estado 136
+
+   43 FORSTAT: FOR P1 ATRIBSTAT PV EXPRESSION PV ATRIBSTAT P2 . STATEMENT
+
+    ID   deslocar, e ir ao estado 3
+    CV1  deslocar, e ir ao estado 4
+    PV   deslocar, e ir ao estado 5
+    RD   deslocar, e ir ao estado 7
+    PR   deslocar, e ir ao estado 8
+    INT  deslocar, e ir ao estado 9
+    FLT  deslocar, e ir ao estado 10
+    STR  deslocar, e ir ao estado 11
+    IF   deslocar, e ir ao estado 12
+    FOR  deslocar, e ir ao estado 13
+    BRK  deslocar, e ir ao estado 14
+    RET  deslocar, e ir ao estado 15
+
+    PARAM       ir ao estado 22
+    STATEMENT   ir ao estado 138
+    VARDECL     ir ao estado 24
+    ATRIBSTAT   ir ao estado 25
+    PRINTSTAT   ir ao estado 26
+    READSTAT    ir ao estado 27
+    RETURNSTAT  ir ao estado 28
+    IFSTAT      ir ao estado 29
+    FORSTAT     ir ao estado 30
+    LVALUE      ir ao estado 31
+
+
+Estado 137
+
+   48 NEXP: CL1 NUMEXPRESSION CL2 NEXP .
+
+    $padrão  reduzir usando a regra 48 (NEXP)
+
+
+Estado 138
+
+   43 FORSTAT: FOR P1 ATRIBSTAT PV EXPRESSION PV ATRIBSTAT P2 STATEMENT .
+
+    $padrão  reduzir usando a regra 43 (FORSTAT)

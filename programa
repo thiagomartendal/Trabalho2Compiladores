@@ -1,0 +1,10 @@
+def main() {
+  int a;
+  int b;
+  if (a > b) {
+    return;
+  } else {
+    return;
+  }
+  return;
+}

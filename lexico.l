@@ -1,9 +1,13 @@
 %{
-  /* #include "identificador.h" */
+  #include <vector>
+  #include <string>
+  #include <algorithm>
   #include "sintatico.tab.h"
 
   int yycolumn = 1;
   int start_line = 1, start_column = 1;
+  int tokenAnterior = -1;
+  std::vector<std::string> funcLex;
 
   #define YY_USER_ACTION                                                   \
     start_line = prev_yylineno; start_column = yycolumn;                   \
@@ -24,7 +28,7 @@
 %%
   int prev_yylineno = yylineno;
 "new" {return NEW;}
-"def" {return DF;}
+"def" {tokenAnterior = DF; return DF;}
 "read" {return RD;}
 "print" {return PR;}
 "null" {return NL;}
@@ -56,7 +60,17 @@
 "]" {return CL2;}
 "," {return VI;}
 ";" {return PV;}
-[a-zA-Z_][a-zA-Z0-9_]* {return ID;}
+[a-zA-Z_][a-zA-Z0-9_]* {
+  if (tokenAnterior == DF) {
+    tokenAnterior = -1;
+    funcLex.push_back(yytext);
+    return IDF;
+  }
+  if (std::find(funcLex.begin(), funcLex.end(), yytext) != funcLex.end()) {
+    return IDF;
+  }
+  return ID;
+}
 [[:digit:]]+ {return ICT;}
 [[:digit:]]+\.[[:digit:]]+ {return FCT;}
 \"(([^\"]|\\\")*[^\\])?\" {return SCT;}

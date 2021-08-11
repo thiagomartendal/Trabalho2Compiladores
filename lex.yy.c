@@ -1028,14 +1028,16 @@ YY_RULE_SETUP
 #line 65 "lexico.l"
 {return ERR;}
 	YY_BREAK
+case YY_STATE_EOF(INITIAL):
+#line 66 "lexico.l"
+{ static int once = 0; return once++ ? 0 : '\n'; }
+	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 66 "lexico.l"
+#line 67 "lexico.l"
 ECHO;
 	YY_BREAK
-#line 1037 "lex.yy.c"
-case YY_STATE_EOF(INITIAL):
-	yyterminate();
+#line 1041 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2050,7 +2052,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 66 "lexico.l"
+#line 67 "lexico.l"
 
 
 int coluna() {

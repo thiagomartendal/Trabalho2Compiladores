@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <string>
-// #include "analise_lexica.h"
+#include "analise_lexica.h"
 #include "sintatico.tab.h"
 
 extern "C" int coluna();
@@ -20,13 +20,16 @@ extern FILE *yyin;
 
 class Entrada {
 private:
-  // AnaliseLexica al; // Classe de análise léxica
+  AnaliseLexica al; // Classe de análise léxica
   bool houveErro(); // Checa se houve um erro léxico
+  void analiseLexicaArquivo();
+  void analiseSintaticaArquivo();
+  void analiseLexicaEntrada();
 
 public:
   Entrada() = default;
-  bool lerArquivo(std::string nome); // Lê arquivo
-  void lerEntrada(); // Lê linha do console
+  bool lerArquivo(std::string nome, std::string flag); // Lê arquivo
+  void lerEntrada(std::string flag); // Lê linha do console
   void exibirTokens(); // Exibe os tokens processados
   void exibirTabelaSimbolos(); // Exibe a tabela de símbolos
 };

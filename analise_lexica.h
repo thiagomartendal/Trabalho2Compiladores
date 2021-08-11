@@ -10,7 +10,7 @@
 #include <map>
 #include "token.h"
 #include "atributo.h"
-#include "identificador.h"
+#include "sintatico.tab.h"
 
 class AnaliseLexica {
 private:

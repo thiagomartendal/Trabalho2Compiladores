@@ -5,166 +5,166 @@
 #include "analise_lexica.h"
 
 void AnaliseLexica::tokenizar(int ntoken, std::string lexema, int linha, int coluna) {
-  Identificador id; // Recebe o identificador do token
+  yytokentype id; // Recebe o identificador do token
   std::string descricao; // Uma descrição do lexema
   // Abaixo segue a verificação dos tokens e as devidas atribuições
-  if (ntoken == Identificador::ERR) {
-    id = Identificador::ERR;
+  if (ntoken == ERR) {
+    id = ERR;
     descricao = "Erro léxico";
   } else {
     switch (ntoken) {
-      case Identificador::ID:
-        id = Identificador::ID;
+      case ID:
+        id = ID;
         descricao = "Identificador";
       break;
-      case Identificador::ICT:
-        id = Identificador::ICT;
+      case ICT:
+        id = ICT;
         descricao = "Constante inteira";
       break;
-      case Identificador::FCT:
-        id = Identificador::FCT;
+      case FCT:
+        id = FCT;
         descricao = "Constante real";
       break;
-      case Identificador::SCT:
-        id = Identificador::SCT;
+      case SCT:
+        id = SCT;
         descricao = "Constante string";
       break;
-      case Identificador::ADD:
-        id = Identificador::ADD;
+      case ADD:
+        id = ADD;
         descricao = "Adição";
       break;
-      case Identificador::SUB:
-        id = Identificador::SUB;
+      case SUB:
+        id = SUB;
         descricao = "Subtração";
       break;
-      case Identificador::MUL:
-        id = Identificador::MUL;
+      case MUL:
+        id = MUL;
         descricao = "Multiplicação";
       break;
-      case Identificador::DIV:
-        id = Identificador::DIV;
+      case DIV:
+        id = DIV;
         descricao = "Divisão";
       break;
-      case Identificador::PRC:
-        id = Identificador::PRC;
+      case PRC:
+        id = PRC;
         descricao = "Porcentagem";
       break;
-      case Identificador::ATR:
-        id = Identificador::ATR;
+      case ATR:
+        id = ATR;
         descricao = "Atribuição";
       break;
-      case Identificador::MAR:
-        id = Identificador::MAR;
+      case MAR:
+        id = MAR;
         descricao = "Maior";
       break;
-      case Identificador::MER:
-        id = Identificador::MER;
+      case MER:
+        id = MER;
         descricao = "Menor";
       break;
-      case Identificador::CMP:
-        id = Identificador::CMP;
+      case CMP:
+        id = CMP;
         descricao = "Comparação";
       break;
-      case Identificador::MAI:
-        id = Identificador::MAI;
+      case MAI:
+        id = MAI;
         descricao = "Maior igual";
       break;
-      case Identificador::MEI:
-        id = Identificador::MEI;
+      case MEI:
+        id = MEI;
         descricao = "Menor igual";
       break;
-      case Identificador::DIF:
-        id = Identificador::DIF;
+      case DIF:
+        id = DIF;
         descricao = "Diferença";
       break;
-      case Identificador::P1:
-        id = Identificador::P1;
+      case P1:
+        id = P1;
         descricao = "Parenteses de abertura";
       break;
-      case Identificador::P2:
-        id = Identificador::P2;
+      case P2:
+        id = P2;
         descricao = "Parenteses de fechamento";
       break;
-      case Identificador::CV1:
-        id = Identificador::CV1;
+      case CV1:
+        id = CV1;
         descricao = "Chave de abertura";
       break;
-      case Identificador::CV2:
-        id = Identificador::CV2;
+      case CV2:
+        id = CV2;
         descricao = "Chave de fechamento";
       break;
-      case Identificador::CL1:
-        id = Identificador::CL1;
+      case CL1:
+        id = CL1;
         descricao = "Colchete de abertura";
       break;
-      case Identificador::CL2:
-        id = Identificador::CL2;
+      case CL2:
+        id = CL2;
         descricao = "Colchete de fechamento";
       break;
-      case Identificador::VI:
-        id = Identificador::VI;
+      case VI:
+        id = VI;
         descricao = "Vírgula";
       break;
-      case Identificador::PV:
-        id = Identificador::PV;
+      case PV:
+        id = PV;
         descricao = "Ponto e vírgula";
       break;
-      case Identificador::NEW:
-        id = Identificador::NEW;
+      case NEW:
+        id = NEW;
         descricao = "Novo";
       break;
-      case Identificador::DF:
-        id = Identificador::DF;
+      case DF:
+        id = DF;
         descricao = "Define função";
       break;
-      case Identificador::RD:
-        id = Identificador::RD;
+      case RD:
+        id = RD;
         descricao = "Ler";
       break;
-      case Identificador::PR:
-        id = Identificador::PR;
+      case PR:
+        id = PR;
         descricao = "Imprimir";
       break;
-      case Identificador::NL:
-        id = Identificador::NL;
+      case NL:
+        id = NL;
         descricao = "Nulo";
       break;
-      case Identificador::INT:
-        id = Identificador::INT;
+      case INT:
+        id = INT;
         descricao = "Tipo inteiro";
       break;
-      case Identificador::FLT:
-        id = Identificador::FLT;
+      case FLT:
+        id = FLT;
         descricao = "Tipo float";
       break;
-      case Identificador::STR:
-        id = Identificador::STR;
+      case STR:
+        id = STR;
         descricao = "Tipo string";
       break;
-      case Identificador::IF:
-        id = Identificador::IF;
+      case IF:
+        id = IF;
         descricao = "Estrutura if";
       break;
-      case Identificador::ELS:
-        id = Identificador::ELS;
+      case ELS:
+        id = ELS;
         descricao = "Estrutura else";
       break;
-      case Identificador::FOR:
-        id = Identificador::FOR;
+      case FOR:
+        id = FOR;
         descricao = "Estrutura for";
       break;
-      case Identificador::BRK:
-        id = Identificador::BRK;
+      case BRK:
+        id = BRK;
         descricao = "Quebra sequência";
       break;
-      case Identificador::RET:
-        id = Identificador::RET;
+      case RET:
+        id = RET;
         descricao = "Retorno";
       break;
     }
   }
   Posicao p = {linha, coluna};
-  if (id == Identificador::ID) {
+  if (id == ID) {
     tabelaSimbolos[lexema].pos.insert(p); // Insere linha no conjunto de linhas de um lexema
   }
   Token token = {id, lexema, p, descricao}; // Monta o token

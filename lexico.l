@@ -62,6 +62,7 @@
 \"(([^\"]|\\\")*[^\\])?\" {return SCT;}
 [ \n\t] {;}
 . {return ERR;}
+<<EOF>> { static int once = 0; return once++ ? 0 : '\n'; }
 %%
 
 int coluna() {

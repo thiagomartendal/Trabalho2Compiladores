@@ -4,7 +4,7 @@ instalar-flex-bison:
 compilar:
 	flex lexico.l
 	bison -d sintatico.y
-	g++ main.cpp entrada.cpp analise_lexica.cpp sintatico.tab.c lex.yy.c -o Main
+	g++ main.cpp entrada.cpp analise_lexica.cpp sintatico.tab.c lex.yy.c -lfl -o Main
 
 programa1_lexico:
 	./Main -l programas/programa-lcc-1.lcc

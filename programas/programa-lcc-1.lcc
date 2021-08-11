@@ -1,0 +1,103 @@
+def fatorial(int x)
+{
+    int fat;
+    for (fat = 1; x > 1; x = x - 1)
+    {
+        fat = fat * x;
+    }
+    print "O Fatorial é: ";
+    print fat;
+    return;
+}
+
+def exp(int x)
+{
+    int result;
+    int e;
+    e = 2.718281828459045235360287;
+    int i;
+    result = e;
+    for (i = 0; i < x; i = i + 1)
+    {
+        result = result * e;
+    }
+    print "O exponencial é: ";
+    print e;
+    return;
+}
+
+def abs(int x)
+{
+    int result;
+    int temp;
+    temp = -1;
+    result = x;
+    if (x < 0)
+    {
+        result  = x * temp;
+    }
+    print "O valor absoluto é: ";
+    print result;
+    return;
+}
+
+def cos(int x)
+{
+    int cateto_adj;
+    int hipotenusa;
+    int result;
+    result = cateto_adj / hipotenusa;
+    print "Cosseno é: ";
+    print result;
+    return;
+}
+
+def sin(int x)
+{
+    int cateto_op;
+    int hipotenusa;
+    int result;
+    result = cateto_op / hipotenusa;
+    print "Seno é: ";
+    print result;
+    return;
+}
+
+def function1(int x)
+{
+    result = exp(x);
+    print "O resultado é: ";
+    print result;
+    return;
+}
+    
+def function2(int x)
+{
+    result = cos(x);
+    print "O resultado é: ";
+    print result;
+    return;
+}
+
+def function3(int x)
+{
+    result = sin(x);
+    print "O resultado é: ";
+    print result;
+    return;
+}
+
+def function4(int x)
+{
+    int temp;
+    int i;
+    temp = x;
+    for (i = 0; i < 3; i = i + 1)
+    {
+        temp = temp * x;
+    }
+    result = temp;
+    print "O resultado é: ";
+    print result;
+    return;
+}

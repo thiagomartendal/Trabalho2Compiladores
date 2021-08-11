@@ -82,7 +82,7 @@ void Entrada::exibirTokens() {
   } else {
     std::cout << "Tokens de Erro Encontrados:\n" << std::endl;
     for (Token tk: al.getTokens()) { // Para cada token na tabela de símbolos, é exibido os dados apenas de tokens de erro
-      if (tk.id == 38) {
+      if (tk.id == ERR) {
         std::cout << "Id: " << tk.id << " - Lexema: " << tk.lexema << " - Linha: " << tk.pos.linha << " - Coluna: " << tk.pos.coluna << " - Descrição: " << tk.descricao << std::endl;
       }
     }

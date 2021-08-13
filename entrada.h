@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "analise_lexica.h"
 #include "sintatico.tab.h"
 
@@ -18,13 +19,15 @@ extern int yylineno;
 extern char* yytext;
 extern FILE *yyin;
 
+
 class Entrada {
 private:
+  std::vector<std::string> entrada;
   AnaliseLexica al; // Classe de análise léxica
   bool houveErro(); // Checa se houve um erro léxico
-  void analiseLexicaArquivo();
-  void analiseSintaticaArquivo();
-  void analiseLexicaEntrada();
+  void analiseLexicaArquivo(); // Lê um arquivo para a analise lexica
+  void analiseSintaticaArquivo(); // Lê um arquivo para a analise sintatica
+  void analiseLexicaEntrada(); // Lê uma entrada para a analise lexica
 
 public:
   Entrada() = default;

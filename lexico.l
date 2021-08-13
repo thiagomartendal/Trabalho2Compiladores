@@ -8,6 +8,8 @@
   int start_line = 1, start_column = 1;
   int tokenAnterior = -1;
   std::vector<std::string> funcLex;
+  std::string tokenLido;
+  yytokentype tkIF;
 
   #define YY_USER_ACTION                                                   \
     start_line = prev_yylineno; start_column = yycolumn;                   \
@@ -19,6 +21,7 @@
 
   extern "C" {
     int coluna(void);
+    const char* tokenAtual(void);
   }
 %}
 
@@ -27,58 +30,66 @@
 
 %%
   int prev_yylineno = yylineno;
-"new" {return NEW;}
-"def" {tokenAnterior = DF; return DF;}
-"read" {return RD;}
-"print" {return PR;}
-"null" {return NL;}
-"int" {return INT;}
-"float" {return FLT;}
-"string" {return STR;}
-"if" {return IF;}
-"else" {return ELS;}
-"for" {return FOR;}
-"break" {return BRK;}
-"return" {return RET;}
-"+" {return ADD;}
-"-" {return SUB;}
-"*" {return MUL;}
-"/" {return DIV;}
-"%" {return PRC;}
-"=" {return ATR;}
-">" {return MAR;}
-"<" {return MER;}
-"==" {return CMP;}
-">=" {return MAI;}
-"<=" {return MEI;}
-"!=" {return DIF;}
-"(" {return P1;}
-")" {return P2;}
-"{" {return CV1;}
-"}" {return CV2;}
-"[" {return CL1;}
-"]" {return CL2;}
-"," {return VI;}
-";" {return PV;}
+"new" {tokenLido = "NEW"; return NEW;}
+"def" {tokenLido = "DF"; tokenAnterior = DF; return DF;}
+"read" {tokenLido = "RD"; return RD;}
+"print" {tokenLido = "PR"; return PR;}
+"null" {tokenLido = "NL"; return NL;}
+"int" {tokenLido = "INT"; return INT;}
+"float" {tokenLido = "FLT"; return FLT;}
+"string" {tokenLido = "STR"; return STR;}
+"if" {tokenLido = "IF"; return IF;}
+"ifelse" {tokenLido = "IFE"; return IFE;}
+"else" {tokenLido = "ELS"; tkIF = IFE; return ELS;}
+"for" {tokenLido = "FOR"; return FOR;}
+"break" {tokenLido = "BRK"; return BRK;}
+"return" {tokenLido = "RET"; return RET;}
+"+" {tokenLido = "ADD"; return ADD;}
+"-" {tokenLido = "SUB"; return SUB;}
+"*" {tokenLido = "MUL"; return MUL;}
+"/" {tokenLido = "DIV"; return DIV;}
+"%" {tokenLido = "PRC"; return PRC;}
+"=" {tokenLido = "ATR"; return ATR;}
+">" {tokenLido = "MAR"; return MAR;}
+"<" {tokenLido = "MER"; return MER;}
+"==" {tokenLido = "CMP"; return CMP;}
+">=" {tokenLido = "MAI"; return MAI;}
+"<=" {tokenLido = "MEI"; return MEI;}
+"!=" {tokenLido = "DIF"; return DIF;}
+"(" {tokenLido = "P1"; return P1;}
+")" {tokenLido = "P2"; return P2;}
+"{" {tokenLido = "CV1"; return CV1;}
+"}" {tokenLido = "CV2"; return CV2;}
+"[" {tokenLido = "CL1"; return CL1;}
+"]" {tokenLido = "CL2"; return CL2;}
+"," {tokenLido = "VI"; return VI;}
+";" {tokenLido = "PV"; return PV;}
 [a-zA-Z_][a-zA-Z0-9_]* {
   if (tokenAnterior == DF) {
     tokenAnterior = -1;
     funcLex.push_back(yytext);
+    tokenLido = "IDF";
     return IDF;
   }
   if (std::find(funcLex.begin(), funcLex.end(), yytext) != funcLex.end()) {
+    tokenLido = "IDF";
     return IDF;
   }
+  tokenLido = "ID";
   return ID;
 }
-[[:digit:]]+ {return ICT;}
-[[:digit:]]+\.[[:digit:]]+ {return FCT;}
-\"(([^\"]|\\\")*[^\\])?\" {return SCT;}
+[[:digit:]]+ {tokenLido = "ICT"; return ICT;}
+[[:digit:]]+\.[[:digit:]]+ {tokenLido = "FCT"; return FCT;}
+\"(([^\"]|\\\")*[^\\])?\" {tokenLido = "SCT"; return SCT;}
 [ \n\t] {;}
-. {return ERR;}
+. {tokenLido = "ERR"; return ERR;}
 <<EOF>> { static int once = 0; return once++ ? 0 : '\n'; }
 %%
 
 int coluna() {
   return start_column;
+}
+
+const char* tokenAtual() {
+  return tokenLido.c_str();
 }

@@ -62,13 +62,13 @@ void Entrada::analiseLexicaEntrada() {
   while(ntoken != 0) { // O loop é executado enquanto houver palavras a serem lidas
     std::string s = yytext;
     if (s == ".") { // Caso uma linha da entrada contenha apenas '.' é declarado o fim da entrada por console
-    break;
+      break;
+    }
+    al.tokenizar(ntoken, yytext, yylineno, coluna()); // Passa dados da linha do console para a classe de análise léxica realizar a tokenização
+    ntoken = yylex(); // Lê mais uma linha de entrada do console
   }
-  al.tokenizar(ntoken, yytext, yylineno, coluna()); // Passa dados da linha do console para a classe de análise léxica realizar a tokenização
-  ntoken = yylex(); // Lê mais uma linha de entrada do console
-}
-std::cout << std::endl;
-Entrada::exibirTokens(); // Para cada linha processada, é exibido os tokens que foram encontrados
+  std::cout << std::endl;
+  Entrada::exibirTokens(); // Para cada linha processada, é exibido os tokens que foram encontrados
 }
 
 void Entrada::exibirTokens() {

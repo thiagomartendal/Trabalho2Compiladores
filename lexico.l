@@ -39,7 +39,7 @@
 "string" {tokenLido = "STR"; return STR;}
 "if" {tokenLido = "IF"; return IF;}
 "ifelse" {tokenLido = "IFE"; return IFE;}
-"else" {tokenLido = "ELS"; tkIF = IFE; return ELS;}
+"else" {tokenLido = "ELS"; return ELS;}
 "for" {tokenLido = "FOR"; return FOR;}
 "break" {tokenLido = "BRK"; return BRK;}
 "return" {tokenLido = "RET"; return RET;}

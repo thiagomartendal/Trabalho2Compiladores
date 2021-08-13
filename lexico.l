@@ -9,7 +9,6 @@
   int tokenAnterior = -1;
   std::vector<std::string> funcLex;
   std::string tokenLido;
-  yytokentype tkIF;
 
   #define YY_USER_ACTION                                                   \
     start_line = prev_yylineno; start_column = yycolumn;                   \
